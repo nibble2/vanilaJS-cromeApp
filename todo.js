@@ -1,22 +1,25 @@
-const toDoForm = document.querySelector(".js-toDoForm");
-const toDoInput = toDoForm.querySelector("input");
-const toDoList = document.querySelector(".js-toDoList");
+const toDoForm = document.querySelector(".js-toDoForm"),
+    toDoInput = toDoForm.querySelector('input'),
+    toDoList = document.querySelector(".js-toDoList");
+
 
 const TODOS_LS = 'toDos';
 
-let toDos = []
+let toDos = [];
 
 function deleteToDo(event) {
-    //console.log(event.target.parentNode);
     const btn = event.target;
+    // console.log(btn);
     const li = btn.parentNode;
-    console.log(li.id);
-    toDoList.removeChild(li)
+    // console.log(li);
+    toDoList.removeChild(li);
 
     const cleanToDos = toDos.filter(function (toDo) {
-        //console.log(toDo.id, parseInt(li.id));
+        console.log(toDo.id, li.id);
+
         return toDo.id !== parseInt(li.id);
     });
+
     toDos = cleanToDos;
     saveToDos();
 }
@@ -34,14 +37,18 @@ function paintToDo(text) {
     delBtn.innerText = "❌";
     delBtn.addEventListener("click", deleteToDo);
     span.innerText = text;
+    li.id = newId;
+
     li.appendChild(delBtn);
     li.appendChild(span);
     toDoList.appendChild(li);
-    li.id = newId;
+
+    // localStorage에 저장할 것
     const toDoObj = {
-        text: text,
-        id: newId
-    };
+        id: newId,
+        text: text
+    }
+
     toDos.push(toDoObj);
     saveToDos();
 }
@@ -53,15 +60,13 @@ function handleSubmit(event) {
     toDoInput.value = "";
 }
 
-
 function loadToDos() {
-    const lodedToDos = localStorage.getItem(TODOS_LS);
-    if (lodedToDos !== null) {
-        const parsedToDos = JSON.parse(lodedToDos);
+    const loadedToDos = localStorage.getItem(TODOS_LS);
+    if (loadedToDos !== null) {
+        const parsedToDos = JSON.parse(loadedToDos);
         parsedToDos.forEach(function (toDo) {
-            //console.log(toDo.text);
             paintToDo(toDo.text);
-        })
+        });
     }
 }
 
