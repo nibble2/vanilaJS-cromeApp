@@ -7,25 +7,31 @@ const TODOS_LS = 'toDos';
 
 let toDos = [];
 
+console.log(toDos);
+
 function deleteToDo(event) {
     const btn = event.target;
-    // console.log(btn);
     const li = btn.parentNode;
-    // console.log(li);
+
+    // 화면에서만 지워짐
     toDoList.removeChild(li);
 
+    // 배열을 삭제하기
     const cleanToDos = toDos.filter(function (toDo) {
-        console.log(toDo.id, li.id);
-
         return toDo.id !== parseInt(li.id);
     });
 
+    //삭제한 배열을 toDos에 넣기
     toDos = cleanToDos;
+
     saveToDos();
+
 }
 
 function saveToDos() {
     localStorage.setItem(TODOS_LS, JSON.stringify(toDos));
+    console.log("toDos: " + JSON.stringify(toDos));
+    console.log('test3');
 }
 
 function paintToDo(text) {
@@ -65,6 +71,7 @@ function loadToDos() {
     if (loadedToDos !== null) {
         const parsedToDos = JSON.parse(loadedToDos);
         parsedToDos.forEach(function (toDo) {
+            console.log('hello')
             paintToDo(toDo.text);
         });
     }
