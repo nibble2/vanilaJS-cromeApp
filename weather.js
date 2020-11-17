@@ -10,7 +10,16 @@ function handleGeoError() {
 }
 
 function getWether(lat, lng) {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`);
+    fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`
+        //우리한테 데이터가 완전히 넘어 왔을 때 함수 호출(데이터가 오는데 시간이 좀 걸리는 경우가 있다)
+        //네트워크 텝에서 온 response json 가져오고 싶어
+    ).then(function (response) {
+        return response.json();
+        //대기상태
+    }).then(function (json) {
+        console.log(json);
+    });
 }
 
 function handleGeoSucces(position) {
