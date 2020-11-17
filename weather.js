@@ -10,7 +10,7 @@ function handleGeoError() {
 }
 
 function getWether(lat, lng) {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}`);
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`);
 }
 
 function handleGeoSucces(position) {
@@ -34,7 +34,9 @@ function loadCoords() {
     if (loadedCoords === null) {
         askForCoords()
     } else {
-        //좌표값을
+        const parsedCoords = JSON.parse(loadedCoords);
+        // console.log(parsedCoords);
+        getWether(parsedCoords.latitude, parsedCoords.longitude);
     }
 }
 
