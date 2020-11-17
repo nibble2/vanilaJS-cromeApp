@@ -1,3 +1,4 @@
+const API_KEY = '5ecfaa9ae25a4ec32abcdf78238c6bb0';
 const COORDS = 'COORDS';
 
 function saveCoords(coords) {
@@ -6,6 +7,10 @@ function saveCoords(coords) {
 
 function handleGeoError() {
     console.log('Cant access geo location');
+}
+
+function getWether(lat, lng) {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}`);
 }
 
 function handleGeoSucces(position) {
@@ -17,6 +22,7 @@ function handleGeoSucces(position) {
     };
 
     saveCoords(coordsObj);
+    getWether(latitude, longitude);
 }
 
 function askForCoords() {
